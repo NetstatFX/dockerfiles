@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  app:
+    build: application
+    container_name:
+    links:
+      - db
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    networks:
+      - web
+    restart: always
+
+  db:
+    image: mariadb:latest
+    container_name: mariadb
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_USER:
+      MYSQL_DATABASE:
+    networks:
+      - web
+    restart: always
+
+networks:
+  web:
+    external: true

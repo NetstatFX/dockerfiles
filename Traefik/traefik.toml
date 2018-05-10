@@ -1,0 +1,28 @@
+defaultEntryPoints = ["http", "https"]
+
+[web]
+address = "8080"
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+
+[acme]
+email = "admin@changeme.com"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+onDemand = false
+[acme.httpChallenge]
+entryPoint = "http"
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "changeme.com"
+watch = true
+exposedbydefault = false

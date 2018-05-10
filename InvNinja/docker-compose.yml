@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  web:
+    image: netstatfx/php:latest
+    container_name: invoiceninja
+    volumes:
+      - ./app:/var/www
+    labels:
+      - "traefik.backend=invoiceninja"
+      - "traefik.frontend.rule=Host:ww"
+    networks:
+      - web
+    restart: always
+
+networks:
+  web:
+    external: true

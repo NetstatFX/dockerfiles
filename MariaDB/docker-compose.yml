@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  app:
+    image: mariadb:latest
+    container_name: mariadb
+    command: "mysqld --sql_mode="
+    volumes:
+      - ./database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: changeme
+      MYSQL_USER: changeme
+      MYSQL_PASSWORD: changeme
+      MYSQL_DATABASE: changeme
+    restart: always
+    networks:
+      - web
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+    restart: always
+    labels:
+      - "traefik.backend=phpmyadmin"
+      - "traefik.frontend.rule=Host:ww"
+    volumes:
+      - /sessions
+    networks:
+      - web
+    restart: always
+
+networks:
+  web:
+    external: true

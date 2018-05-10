@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  yetiforce:
+    image: yetiforce_crm
+    container_name: yetiforce
+    volumes:
+      - ./app:/var/www
+    ports:
+      - "8888:8080"
+    networks:
+      - web
+    restart: always
+
+networks:
+  web:
+    external: true
